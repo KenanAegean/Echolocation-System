@@ -129,7 +129,6 @@ The system uses three independent float curves:
 
 ## Usage Example
 ```cpp
-// In your character class
 UPROPERTY(EditAnywhere, Category="Echo")
 TSubclassOf<AEchoGenerator> EchoGeneratorClass;
 
