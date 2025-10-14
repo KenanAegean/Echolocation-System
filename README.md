@@ -106,13 +106,14 @@ The system uses three independent float curves:
 - **Duration**: Overridable via `FadeoutDuration` property
 - **Cleanup**: Destroys actor upon completion
 
-## Visual Progression
+## Use Cases
 
 | Stage | Description | Image |
 |-------|-------------|-------|
-| Idle | Dark environment, minimal visibility | ![Idle State](./readme/idle_state.png) |
-| Activation | Sonar pulse emitted, expanding ring visible | ![Activation](./readme/activation.png) |
-| Full Effect | Maximum radius, objects fully outlined | ![Full Effect](./readme/full_effect.png) |
+| Echomaker Devices | Can make echoes wtih certain frequency | ![Idle State](./readme/pickup.gif) |
+| Player Makes Echo | Player can make echo with 3 diggarent level | ![Activation](./readme/echolocation_effect.gif) |
+| Enemy Makes Echo | Enemy can make echo with diffarent colors| ![Full Effect](./readme/enemy_echo.gif) |
+| Throwable Echomaker Objects | There is throwable objects that can make echoes when hit| ![Full Effect](./readme/throw.gif) |
 
 ![Echo Progression Animation](./readme/echo_progression.gif)
 *Complete echo cycle from activation to fadeout*
