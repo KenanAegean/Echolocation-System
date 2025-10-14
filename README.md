@@ -212,6 +212,7 @@ EchoGenerator (AActor)
 **Engine**: Unreal Engine 5  
 **Language**: C++ with Blueprint integration  
 **Input System**: Enhanced Input System
+<br>**Special Thanks**: Patsanoob
 
 ---
 
