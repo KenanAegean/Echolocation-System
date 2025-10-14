@@ -129,39 +129,6 @@ The system uses three independent float curves:
 - `Outline Color`: Edge highlight color
 - `Sound Ring Range`: Maximum echo radius
 
-## Performance Considerations
-
-### Optimization Techniques
-
-1. **Static Post-Process Volume Caching**
-```cpp
-   static TWeakObjectPtr<APostProcessVolume> CachedPPVolume;
-```
-   - Single lookup across all echo instances
-   - Weak pointer prevents memory leaks
-
-2. **Tick Disabled**
-```cpp
-   PrimaryActorTick.bCanEverTick = false;
-```
-   - Timeline component handles all updates
-   - No unnecessary per-frame overhead
-
-3. **Component Cleanup**
-```cpp
-   DecalComp->DestroyComponent();
-   PPVolume->Settings.WeightedBlendables.Array.RemoveAt(i);
-```
-   - Explicit component destruction
-   - Post-process blendable removal prevents material leaks
-
-### Commented Cooldown System
-The code includes a commented-out global cooldown mechanism:
-```cpp
-// static double LastEchoTime;
-// Prevents spam-spawning of echo actors
-```
-Can be re-enabled to limit echo frequency for performance or gameplay reasons.
 
 ## Usage Example
 ```cpp
