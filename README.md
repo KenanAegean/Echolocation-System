@@ -108,12 +108,12 @@ The system uses three independent float curves:
 
 ## Use Cases
 
-| Stage | Description | Image |
+| Case | Description | Image |
 |-------|-------------|-------|
-| Echomaker Devices | Can make echoes wtih certain frequency | ![Idle State](./readme/pickup.gif) |
-| Player Makes Echo | Player can make echo with 3 diggarent level | ![Activation](./readme/echolocation_effect.gif) |
-| Enemy Makes Echo | Enemy can make echo with diffarent colors| ![Full Effect](./readme/enemy_echo.gif) |
-| Throwable Echomaker Objects | There is throwable objects that can make echoes when hit| ![Full Effect](./readme/throw.gif) |
+| Echomaker Devices | Can make echoes with certain frequency | ![Echomaker Device](./readme/pickup.gif) |
+| Player Makes Echo | Player can make echo with 3 different levels | ![Player Echo](./readme/echolocation_effect.gif) |
+| Enemy Makes Echo | Enemy can make echo with different colors | ![Enemy Echo](./readme/enemy_echo.gif) |
+| Throwable Echomaker Objects | There are throwable objects that can make echoes when hit | ![Throwable Object](./readme/throw.gif) |
 
 ![Echo Progression Animation](./readme/echo_progression.gif)
 *Complete echo cycle from activation to fadeout*
