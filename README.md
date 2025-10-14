@@ -209,20 +209,6 @@ EchoGenerator (AActor)
 ![Gameplay Demo](./readme/gameplay_demo.gif)
 *Player using echolocation to navigate through dark environment*
 
-## Future Enhancements
-
-- [ ] Object-specific stencil coloring based on threat level
-- [ ] Audio synthesis tied to echo radius
-- [ ] Niagara particle system integration for ripple effects
-- [ ] Multi-channel echo system (different frequencies reveal different objects)
-- [ ] Dynamic obstacle detection and navigation assistance
-
-## Technical Requirements
-
-- **Engine**: Unreal Engine 5.x
-- **Language**: C++ with Blueprint integration
-- **Input System**: Enhanced Input System
-- **Rendering**: Custom post-process materials with stencil buffer access
 
 ## Credits
 
