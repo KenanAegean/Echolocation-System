@@ -115,9 +115,6 @@ The system uses three independent float curves:
 | Enemy Makes Echo | Enemy can make echo with different colors | ![Enemy Echo](./readme/enemy_echo.gif) |
 | Throwable Echomaker Objects | There are throwable objects that can make echoes when hit | ![Throwable Object](./readme/throw.gif) |
 
-![Echo Progression Animation](./readme/echo_progression.gif)
-*Complete echo cycle from activation to fadeout*
-
 ## Blueprint Integration
 
 ![Spawn Actor Blueprint](./readme/spawn_actor_blueprint.png)
