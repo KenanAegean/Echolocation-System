@@ -8,12 +8,43 @@ An Unreal Engine C++ implementation of a sonar-based visual navigation system th
 
 This echolocation system creates a sonar mechanic where players emit sound pulses that visually reveal their surroundings through edge detection and outline rendering. The system combines decal-based ground effects with post-process materials to create an immersive navigation experience in low-visibility environments.
 
-![Echolocation Effect](./readme/echolocation_effect.gif)
+![Echolocation Effect](./readme/echolocation_effect.gif)  
 *Echolocation revealing environment geometry through edge detection*
+
+---
+
+## Quick Setup Guide (Editor)
+
+### 1. Scene Setup
+
+1. Add a **PostProcessVolume** to your level.
+2. With the PostProcessVolume selected, in the Details panel:
+   - Search for **"Post Process Materials"**.
+   - Add a new element.
+   - Set it to use the **`M_PostProcessPerma`** material.
+3. Make sure the volume is **Unbound** if you want the effect to apply everywhere in the level.
+
+### 2. Special Outline Colors (Custom Depth)
+
+To give specific objects colored outlines:
+
+1. Select any mesh you want to highlight.
+2. In the Details panel, search for **"Depth"**.
+3. Enable **Render CustomDepth Pass**.
+4. Set **CustomDepth Stencil Value**:
+   - `1` → Green outline  
+   - `2` → Yellow outline  
+   - `3` → Red outline  
+   *(More colors can be added later via the material graph.)*
+
+These stencil values plug directly into the post-process material's custom stencil logic, which decides how each object is outlined based on its stencil ID.
+
+---
 
 ## Core Components
 
 ### 1. EchoGenerator (Actor)
+
 The primary actor responsible for generating and managing echo effects.
 
 **Key Features:**
@@ -35,13 +66,15 @@ float NewRadius = FMath::Lerp(StartRange, SoundRingRange, Alpha);
 ```
 
 ### 2. BaseEchoPawn (Character)
+
 Player character implementation with Enhanced Input System integration.
 
 **Capabilities:**
 - Input binding for sonar activation
-- Spawns `EchoGenerator` actors at player position
+- Spawns EchoGenerator actors at player position
 - Configurable visual properties (color, range)
 - Blueprint-extensible design pattern
+
 ```cpp
 void ABaseEchoPawn::SpawnEcho()
 {
@@ -58,7 +91,8 @@ void ABaseEchoPawn::SpawnEcho()
 ## Material System
 
 ### Post-Process Material Graph
-![Material Graph Overview](./readme/material_graph_overview.png)
+
+![Material Graph Overview](./readme/material_graph_overview.png)  
 *Complete post-process material graph showing edge detection and outline rendering*
 
 The post-process material implements:
@@ -69,15 +103,16 @@ The post-process material implements:
 4. **Color Blending**: Lerp operations for smooth color transitions
 
 ### Color System Architecture
-![Color System](./readme/color_system.png)
+
+![Color System](./readme/color_system.png)  
 *Material parameter setup for dynamic color control*
 
 **Special Color Parameter**: Allows dynamic color switching through material parameters
-- `OutlineColor`: Defines the primary outline color
-- `SpecialColor`: Alternative color channel for gameplay-specific highlighting
+- OutlineColor: Defines the primary outline color
+- SpecialColor: Alternative color channel for gameplay-specific highlighting
 - Intensity modulation for fade effects
 
-![Switch Node Implementation](./readme/switch_node.png)
+![Switch Node Implementation](./readme/switch_node.png)  
 *Custom stencil switch for handling different object types*
 
 **Custom Stencil Switch**: Material graph branch that handles different stencil values to render specific object types with appropriate colors.
@@ -87,23 +122,23 @@ The post-process material implements:
 The system uses three independent float curves:
 
 ### 1. Radius Expansion Curve
-- **Purpose**: Controls the expanding ring radius from `StartRange` to `SoundRingRange`
+- **Purpose**: Controls the expanding ring radius from StartRange to SoundRingRange
 - **Interpolation**: Linear interpolation between start and target radius
 - **Updates**: Both decal scale and post-process sphere mask
 
 ### 2. Post-Process Intensity Curve
 - **Purpose**: Modulates the outline visibility strength
 - **Effect**: Fades outline effect over time
-- **Parameter**: `Intensity` on post-process material
+- **Parameter**: Intensity on post-process material
 
 ### 3. Decal Intensity Curve
 - **Purpose**: Independent fade control for ground decal
 - **Benefit**: Allows different timing for surface vs outline effects
-- **Parameter**: `Intensity` on decal material
+- **Parameter**: Intensity on decal material
 
 ### Fadeout Timeline
 - **Trigger**: Starts after decal timeline completes
-- **Duration**: Overridable via `FadeoutDuration` property
+- **Duration**: Overridable via FadeoutDuration property
 - **Cleanup**: Destroys actor upon completion
 
 ## Use Cases
@@ -117,17 +152,17 @@ The system uses three independent float curves:
 
 ## Blueprint Integration
 
-![Spawn Actor Blueprint](./readme/spawn_actor_blueprint.png)
+![Spawn Actor Blueprint](./readme/spawn_actor_blueprint.png)  
 *Blueprint node showing exposed spawn parameters*
 
 **Exposed Spawn Parameters:**
-- `Fadeout Duration`: Override default fade timing
-- `Decal Color`: Visual color of echo effect
-- `Outline Color`: Edge highlight color
-- `Sound Ring Range`: Maximum echo radius
-
+- Fadeout Duration: Override default fade timing
+- Decal Color: Visual color of echo effect
+- Outline Color: Edge highlight color
+- Sound Ring Range: Maximum echo radius
 
 ## Usage Example
+
 ```cpp
 UPROPERTY(EditAnywhere, Category="Echo")
 TSubclassOf<AEchoGenerator> EchoGeneratorClass;
@@ -155,21 +190,27 @@ void AMyCharacter::ActivateSonar()
 ## Required Assets
 
 ### Materials
-- `MI_Decal`: Material instance for ground decal
-- `PPMat`: Post-process material with edge detection
+- MI_Decal: Material instance for ground decal
+- PPMat: Post-process material with edge detection
+- M_PostProcessPerma: Level post-process material assigned on the PostProcessVolume
   
 ### Curves
-- `Curve_Radius`: Float curve for expansion
-- `Curve_Intensity`: Float curve for PP fade
-- `Curve_IntensityDecal`: Float curve for decal fade
-- `Curve_Fadeout`: Float curve for final fade
+- Curve_Radius: Float curve for expansion
+- Curve_Intensity: Float curve for PP fade
+- Curve_IntensityDecal: Float curve for decal fade
+- Curve_Fadeout: Float curve for final fade
 
 ### Level Setup
 - Post-process volume in scene (marked as unbound)
+- Volume's Post Process Materials includes M_PostProcessPerma
+- Any mesh that should be outlined:
+  - Has **Render CustomDepth Pass** enabled
+  - Has an appropriate **CustomDepth Stencil Value** set (1-3 for different colors)
 
 ## Blueprint Events
 
 The system exposes two Blueprint implementable events:
+
 ```cpp
 UFUNCTION(BlueprintImplementableEvent, Category="Echo")
 void CE_Expand();  // Called when echo starts expanding
@@ -192,6 +233,7 @@ EchoGenerator (AActor)
 ```
 
 ### Material Parameters
+
 | Parameter | Type | Purpose |
 |-----------|------|---------|
 | Location | Vector | Echo center position |
@@ -202,17 +244,16 @@ EchoGenerator (AActor)
 
 ## Gameplay Demo
 
-![Gameplay Demo](./readme/gameplay_demo.gif)
+![Gameplay Demo](./readme/gameplay_demo.gif)  
 *Player using echolocation to navigate through dark environment*
-
 
 ## Credits
 
 **Project**: Echoes of Stella - Echolocation Navigation System  
 **Engine**: Unreal Engine 5  
 **Language**: C++ with Blueprint integration  
-**Input System**: Enhanced Input System
-<br>**Special Thanks**: Patsanoob
+**Input System**: Enhanced Input System  
+**Special Thanks**: Patsanoob
 
 ---
 
